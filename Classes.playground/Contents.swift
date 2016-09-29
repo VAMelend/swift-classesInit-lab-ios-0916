@@ -19,6 +19,24 @@ import Foundation
 // write your code here
 
 
+class Person {
+    var firstName:String
+    var lastName:String
+    var fullName:String {
+        return firstName+" "+lastName
+    }
+    func greet(_ newPerson:Person)-> String{
+        return "Hello, \(newPerson.firstName)!"
+        
+    }
+    
+    
+    init(firstName:String, lastName:String) {
+        self.firstName = firstName
+        self.lastName = lastName
+    }
+}
+
 
 
 
@@ -37,6 +55,8 @@ assert(person.lastName == "Johnson", person.lastName)
  
  You can add this property to the class definition you wrote in Question #1.
  */
+
+
 
 
 
@@ -82,12 +102,25 @@ extension Double {
 }
 
 // write your code here
-
-
-
-
-
-
+class Transaction{
+    var type:String
+    var amount:Double
+    var description:String{
+        if type == "in"{
+            
+        return "Transaction: credit in the amount of $\(amount.toMoney)"
+    }
+        else {
+            return "Transaction: debit in the amount of $\(amount.toMoney)"
+            
+        }
+    }
+    
+    init(type:String, amount:Double){
+    self.type = type
+    self.amount = amount
+    }
+}
 
 
 
@@ -115,9 +148,6 @@ assert(transaction2.amount == 1.2, "\(transaction2.amount)")
 
 
 
-
-
-
 // Test
 assert(transaction1.description == "Transaction: credit in the amount of $10.00", transaction1.description)
 assert(transaction2.description == "Transaction: debit in the amount of $1.20", transaction2.description)
@@ -134,13 +164,37 @@ assert(transaction2.description == "Transaction: debit in the amount of $1.20", 
  */
 // write your code here
 
+class BankAccount{
+    var owner:Person
+    var transactions=[Transaction]()
+    func deposit(_ moneyDeposited:Double){
+        let depo = Transaction(type: "in", amount: moneyDeposited)
+        transactions.append(depo)
+        
+    }
+    func withdraw(_ moneyTaken:Double){
+        let withD = Transaction(type: "out", amount: moneyTaken)
+        transactions.append(withD)
+        
+    }
 
-
-
-
-
-
-
+    
+    var balance:Double{
+        var balance = 0.0
+        for num in transactions {
+            if num.type == "in"{
+                balance += num.amount}
+            else {
+                balance -= num.amount
+            }
+        }
+        return balance
+    }
+    
+    init(owner:Person){
+        self.owner = owner
+    }
+}
 
 
 // Test
@@ -155,14 +209,7 @@ assert(personBankAccount.transactions.isEmpty)
  You need a way to for people to add money to their bank account. In the `BankAccount` class you created in Question #6, add a method called `deposit(_:)`. This method should take a `Double` representing the amount to be deposited into the account as a parameter. It should create a new `Transaction` object representing the deposit and add it to the `BankAccount`'s `transactions` array. This method does not need to return anything.
  */
 
-
-
-
-
-
-
-
-
+// crew
 
 
 // Test
